@@ -15,8 +15,8 @@ Każdy z programów `.ts` można uruchomić przez `ts-node file.ts`.
 - uruchomić `npm test`
 
 ```
-git clone https://github.com/erosb/ts-node-jasmine-example.git
-cd ts-node-jasmine-example/
+git clone https://github.com/teamWSIZ/node-ts-obiektowe.git
+cd node-ts-obiektowe/
 npm install
 npm test
 ```
