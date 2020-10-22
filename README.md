@@ -1,6 +1,18 @@
-# Example of running the jasmine tests of a typescript project in watch mode
+# Programowanie obiektowe w JS/TS/nodejs
 
-Steps for installing & trying out the setup:
+
+Projekt na podstawie:
+https://github.com/erosb/ts-node-jasmine-example
+
+
+# Uruchomienie
+
+### Programy
+Każdy z programów `.ts` można uruchomić przez `ts-node file.ts`.
+
+### Testy
+- dostosować maskę w `/spec/support/jasmine.json`
+- uruchomić `npm test`
 
 ```
 git clone https://github.com/erosb/ts-node-jasmine-example.git
@@ -9,4 +21,4 @@ npm install
 npm test
 ```
 
-Enjoy.
+

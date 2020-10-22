@@ -1,8 +1,8 @@
 {
-"spec_dir": "src",
-"spec_files": [
-"*.spec.ts"
-],
-"stopSpecOnExpectationFailure": false,
-"random": false
+  "random": false,
+  "spec_dir": "src",
+  "spec_files": [
+    "t2_*.spec.ts"
+  ],
+  "stopSpecOnExpectationFailure": false
 }
