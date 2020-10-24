@@ -28,7 +28,11 @@ export class Lightsource {
      * Świeci światłem przez podany czas -- zużywając baterie
      */
     time_lapse(time: number) {
-
+        this.battery_level -= this.intensity * time;
+        if (this.battery_level <= 0) {
+            this.battery_level = 0;
+            this.intensity = 0;
+        }
     }
 
     /**
@@ -49,6 +53,6 @@ export class Lightsource {
      * Wyłącza źródło światła
      */
     turn_off() {
-
+        this.intensity = 0;
     }
 }
