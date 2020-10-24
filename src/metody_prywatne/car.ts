@@ -31,4 +31,8 @@ export class Car {
   get_engine_type(): string {
     return this.engine;
   }
+
+  set_name(new_name: string) {
+    this.name = new_name + '.';
+  }
 }
