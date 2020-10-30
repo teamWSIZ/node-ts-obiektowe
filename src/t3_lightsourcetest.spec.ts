@@ -1,5 +1,4 @@
-import {Car} from "./metody_prywatne/car";
-import {Lightsource} from "./klasa_do_testow/lightsource";
+import {Lightsource} from "./kompozycja_testy_lightsource/lightsource";
 
 
 describe('Lightsource tests', function () {
