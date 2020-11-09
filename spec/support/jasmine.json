@@ -2,7 +2,7 @@
   "random": false,
   "spec_dir": "src",
   "spec_files": [
-    "t3_ligh*.spec.ts"
+    "t5_br*.spec.ts"
   ],
   "stopSpecOnExpectationFailure": false
 }
