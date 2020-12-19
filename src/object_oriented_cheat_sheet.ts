@@ -31,6 +31,10 @@ class LocalizedActor extends ActorBase implements Localized {
 class MoveableActor extends LocalizedActor implements Moveable {
     setLocation(newLocation: number[]) {
     }
+
+    getLocation(): number[] {
+        return super.getLocation();
+    }
 }
 
 class ReactiveActor extends MoveableActor implements Reactive {

@@ -10,7 +10,6 @@ export class AdBlockPlugin implements BrowserPlugin {
     }
 }
 
-
 export interface BrowserPlugin {
     /**
      * Funkcja uruchamiana po załadowaniu strony, przed jej wyświetleniem i przed ładowaniem resource'ów (typu

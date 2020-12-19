@@ -20,5 +20,4 @@ describe('Simple tests', function() {
     c.service_car(shop, 'upgrade engine');
     expect(c.get_engine_type()).toEqual('V12.');
   });
-
 });
