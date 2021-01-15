@@ -23,19 +23,27 @@ class Score {
     }
 }
 
-app.get('/', function (req, res) {
+app.s = [];
+
+app.get('/', (req, res) => {
     res.send({"comment": 'App works ok!'});
 });
 
-app.get('/post', function (req, res) {
+app.get('/post', (req, res) => {
     let name = req.query.name;
     let score = parseInt(req.query.score);
     let score2 = score * score;
+    app.s.push('12');
+    console.log(app.s);
     // (....)
-    res.send({"comment": `Got: ${name} -> ${score}; (kw = ${score2}`});
+    fs.appendFile('score.csv', `${name},${score}\n`, (err) => {
+        if (err)
+            console.log('error occurred:' + err);
+    });
+    res.send({"comment": `Got: ${name} -> ${score}; (kw = ${score2})`});
 });
 
-app.get('/scores', function (req, res) {
+app.get('/scores', (req, res) => {
     let results = [];
     const rl = readline.createInterface({
         input: fs.createReadStream('score.csv'),
