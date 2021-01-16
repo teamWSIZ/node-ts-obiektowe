@@ -1,26 +1,26 @@
-import {Exam} from "../_model/exam";
 import {LoggerService} from "./logger-service";
 import axios from "axios";
+import {Exam} from "../model/exam";
 
-export class ExternalDataService {
+export class ExamService {
     url: string;
-    private log: LoggerService;
+    private logger: LoggerService;
 
     constructor(url: string, logger: LoggerService) {
         this.url = url;
-        this.log = logger;
+        this.logger = logger;
     }
 
     async getAllExams(): Promise<Exam[]> {
         let url = `${this.url}/exams`;
-        this.log.info(`Pulling all exams from ${url}`);
+        await this.logger.info(`Pulling all exams from ${url}`);
+
         let res = await axios.get(url);
         let result: Exam[] = [];
         res.data.forEach((item) => {
             result.push(Object.assign(new Exam(), item));
         });
-        console.log(`--------`);
-        console.log(result[5]);
+        await this.logger.info(`Pulled ${result.length} exams from Exam microservice`)
         return result;
     }
 
