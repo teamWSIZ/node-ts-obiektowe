@@ -13,43 +13,43 @@ const port = 3001;
 
 
 //startup
-app.service = {};
-app.service.log = new TimedLoggerService();  //todo: select type
-app.service.clickbait = new ClickbaitService(app.service.log);   //przekazuje instancję logera do serwisu clickbait
-app.service.exams = new ExamService('https://doha.wsi.edu.pl:5200', app.service.log);
-
+let logger: LoggerService = new TimedLoggerService();
+let clickbaitService = new ClickbaitService(logger);   //przekazuje instancję logera do serwisu clickbait
+let examsService = new ExamService('https://doha.wsi.edu.pl:5200', logger);
 
 // let data = new ExternalDataService('https://doha.wsi.edu.pl:5200', app.service.log);
 
 app.get('/', async (req, res) => {
+    await logger.info('Some info');
     res.send({"comment": 'App works ok!'});
 });
 
 app.get('/post', async (req, res) => {
     //sposób na odczytanie danych przekazanych w parametrze zapytania http GET
-    await app.service.clickbait.click();
+    await clickbaitService.click();
 
     let name = req.query.name;
     let age = parseInt(req.query.age);
     let pesel = req.query.pesel;
     if (name===undefined || age === undefined || pesel === undefined) {
-        await app.service.log.error('Data missing in call to /post');
+        await logger.error('Data missing in call to /post');
+        res.status(400);
         res.send({'comment': 'parameters name,age,pesel are obligatory'});
         return;
     }
     let u = new User(name, age, pesel);
 
-    await app.service.log.info(JSON.stringify(u));
+    await logger.info(JSON.stringify(u));
 
     res.send(u);
 });
 
 app.get('/clicks', async (req, res) => {
-    res.send({"clicks": await app.service.clickbait.get_clicks()});
+    res.send({"clicks": await clickbaitService.getClicks()});
 });
 
 app.get('/exams', async (req, res) => {
-    res.send({"exams": await app.service.exams.getAllExams()});
+    res.send({"exams": await examsService.getAllExams()});
 });
 
 

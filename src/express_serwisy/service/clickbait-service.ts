@@ -14,7 +14,7 @@ export class ClickbaitService {
         this.clicks += 1;
     }
 
-    async get_clicks() {
+    async getClicks() {
         return this.clicks;
     }
 }
