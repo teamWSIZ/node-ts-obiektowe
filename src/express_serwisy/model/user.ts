@@ -10,6 +10,14 @@ export class User {
         this.pesel = pesel;
     }
 
+    isValid(): boolean {
+        if (this.name === undefined) {
+            return false;
+        }
+    }
+
+
+
     static empty(): User {
         return new User('', 0, '');
     }
