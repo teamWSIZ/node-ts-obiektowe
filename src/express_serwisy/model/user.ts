@@ -11,9 +11,15 @@ export class User {
     }
 
     isValid(): boolean {
-        if (this.name === undefined) {
+        if (this.name === undefined || this.age===undefined || this.pesel===undefined) {
+            console.log('parameters undefined')
             return false;
         }
+        if (this.name.length==0 || this.age<0 || this.age>140 || this.pesel.length<9) {
+            console.log('parameter values are out of range')
+            return false;
+        }
+        return true;
     }
 
 

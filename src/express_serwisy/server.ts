@@ -2,6 +2,8 @@ import {User} from "./model/user";
 import {LoggerService, TimedLoggerService} from "./service/logger-service";
 import {ClickbaitService} from "./service/clickbait-service";
 import {ExamService} from "./service/exam-service";
+import {StatusCodes} from "http-status-codes";
+import {TimerService} from "./service/timer-service";
 
 const express = require('express');
 const app = express();
@@ -16,6 +18,7 @@ const port = 3001;
 let logger: LoggerService = new TimedLoggerService();
 let clickbaitService = new ClickbaitService(logger);   //przekazuje instancję logera do serwisu clickbait
 let examsService = new ExamService('https://doha.wsi.edu.pl:5200', logger);
+let timerService = new TimerService();
 
 // let data = new ExternalDataService('https://doha.wsi.edu.pl:5200', app.service.log);
 
@@ -29,15 +32,21 @@ app.get('/post', async (req, res) => {
     await clickbaitService.click();
 
     let name = req.query.name;
-    let age = parseInt(req.query.age);
-    let pesel = req.query.pesel;
-    if (name===undefined || age === undefined || pesel === undefined) {
-        await logger.error('Data missing in call to /post');
+    let age: number;
+    try {
+        age = parseInt(req.query.age);
+    } catch (e) {
         res.status(400);
-        res.send({'comment': 'parameters name,age,pesel are obligatory'});
+        res.send({'comment': 'age must be a number'});
+    }
+    let pesel = req.query.pesel;
+    let u = new User(name, age, pesel);
+    if (!u.isValid()) {
+        await logger.error('Data missing in call to /post');
+        res.status(StatusCodes.BAD_REQUEST);
+        res.send({'comment': 'parameters name,age,pesel are obligatory; values must be proper!'});
         return;
     }
-    let u = new User(name, age, pesel);
 
     await logger.info(JSON.stringify(u));
 
@@ -49,9 +58,16 @@ app.get('/clicks', async (req, res) => {
 });
 
 app.get('/exams', async (req, res) => {
-    res.send({"exams": await examsService.getAllExams()});
+    // req.query to dict; 'active' in req.query sprawdza czy taki klucz jest w dict,
+    // czyli czy klient przysłał ten parametr
+    let active = ('active' in req.query && req.query.active);
+    await logger.info(`Active=${active}`);
+    res.send({"exams": await examsService.getAllExams(active)});
 });
 
+app.get('/time', async (req, res) => {
+    res.send({"server_time": timerService.getCurrentServerTimestamp()});
+});
 
 
 console.log(`Starting app: http://localhost:${port}/post`);

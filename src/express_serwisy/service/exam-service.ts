@@ -11,7 +11,7 @@ export class ExamService {
         this.logger = logger;
     }
 
-    async getAllExams(): Promise<Exam[]> {
+    async getAllExams(onlyActive: boolean = false): Promise<Exam[]> {
         let url = `${this.url}/exams`;
         await this.logger.info(`Pulling all exams from ${url}`);
 
@@ -21,7 +21,11 @@ export class ExamService {
             result.push(Object.assign(new Exam(), item));
         });
         await this.logger.info(`Pulled ${result.length} exams from Exam microservice`)
-        return result;
+        if (onlyActive) {
+            return result.filter(ex => ex.active === true);
+        } else {
+            return result;
+        }
     }
 
 }
