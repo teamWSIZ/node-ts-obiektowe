@@ -34,9 +34,6 @@ export class FlightRadar24SkyScanner implements SkyScanner {
             for (const property in res.data) {
                 console.log(`${property}: ${res.data[property]}`);
             }
-            // for(const item of res.data.entries) {
-            //     console.log(item);
-            // }
         } catch (e) {
             console.log('error occurred:', e);
         }

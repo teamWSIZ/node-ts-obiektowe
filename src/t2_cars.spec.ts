@@ -1,8 +1,8 @@
 import {Car} from "./metody_prywatne/car";
 import {CarMaintenanceShop} from "./metody_prywatne/car_maintenance_shop";
 
-describe('Simple tests', function() {
-  it('prosty test równości działą', function() {    /*...*/
+describe('Simple tests', () => {
+  it('prosty test równości działą', () => {    /*...*/
     let g = 12;
     expect(g).toEqual(12);
   });

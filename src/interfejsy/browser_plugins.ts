@@ -6,7 +6,6 @@ export class DoNothingPlugin implements BrowserPlugin {
 
 export class AdBlockPlugin implements BrowserPlugin {
     on_page_load(html: string[]) {
-        //todo: usunąć wszystkie linie w których jest słowo advertisement
     }
 }
 

@@ -63,7 +63,7 @@ app.get('/', async (req, res) => {
 
 app.get('/users', async (req, res) => {
     let u = new User('kadabra', 112);
-    User.noNeedForInstance();   //użycie metody statycznej
+    User.noNeedForInstance();
     res.send(User.schoolUser('Dijkstra'));
 });
 
