@@ -3,9 +3,7 @@ const app = express();
 
 app.use(express.json());
 
-// const bodyParser = require('body-parser');
-// app.use(bodyParser);
-
+// ustawienie połączenia z bazą
 const Pool = require('pg').Pool;
 const pool = new Pool({
     host: '10.10.0.33',
@@ -18,25 +16,35 @@ const pool = new Pool({
 const port = 3001;
 
 app.get('/', async (req, res) => {
+    console.log('test stanu aplikacji');
     res.send({"comment": 'App works ok!'});
 });
 
 app.get('/users', async (req, res) => {
-    // let u = new User('kadabra', 112);
-    // res.send(u);
-    pool.query('select * from gopass.users', [], (er, re) => {
+    let limitstring = req.query.limit;
+    if (limitstring===undefined) limitstring='5';
+    let limit = parseInt(limitstring);
+
+    pool.query('select * from gopass.users order by email limit $1', [limit], (er, re) => {
         if (er) throw er;
         res.send(re.rows);
     });
 });
 
 app.get('/usercount', async (req, res) => {
-    // let u = new User('kadabra', 112);
-    // res.send(u);
-    let count = (await pool.query('select count(*) from gopass.users', [])).rows[0];
-    res.send(count);
-
+    let rrr = await pool.query('select count(*) from gopass.users', []);
+    res.send(rrr.rows[0]);
 });
+
+app.get('/createuser', async (req, res) => {
+    let email = req.query.email;
+    let pass = req.query.hashpass;
+    // ↑↑ to musi być podane z przeglądarki
+    let nu = await pool.query('insert into gopass.users(email, hashpass) VALUES ($1,$2) returning *',
+        [email, pass]);
+    res.send(nu.rows[0]);
+});
+
 
 
 app.post('/users', async (req, res) => {

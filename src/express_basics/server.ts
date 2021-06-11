@@ -3,7 +3,7 @@ import {User} from "./_model/user";
 const express = require('express');
 const app = express();
 
-const port = 3001;
+const port = 3002;
 
 app.s = [];
 
@@ -12,15 +12,15 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
-    let u = new User('kadabra', 112);
-    res.send(u);
+    let u1 = new User('kadabra1', 112);
+    let u2 = new User('kadabra2', 113);
+    res.send([u1, u2]);
 });
 
 app.get('/greet', async (req, res) => {
     console.log('/greet path called');
     res.send({"comment": "hi there!"});
 });
-
 
 
 console.log(`Starting app; try: http://localhost:${port}/users`);
